@@ -1,9 +1,9 @@
 import logging
 from typing import Final, Optional
 
-import cssutils
-from bs4 import BeautifulSoup
-from cssutils.css import CSSStyleSheet, CSSMediaRule, CSSRule, CSSStyleRule
+import cssutils  # type: ignore
+from bs4 import BeautifulSoup  # type: ignore
+from cssutils.css import CSSStyleSheet, CSSMediaRule, CSSRule, CSSStyleRule  # type: ignore
 
 cssutils.log.setLevel(logging.FATAL)
 MEDIA_TEXT: Final[str] = "(prefers-color-scheme: dark)"
