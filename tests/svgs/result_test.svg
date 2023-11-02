@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="472" id="svg2" width="620" xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs id="defs4">
+<path d="m0 0h77v210h-77z" id="box1" stroke="#000" stroke-width="2"/>
+<path d="m0 0h77v60h-77z" id="box2" stroke="#000" stroke-width="2"/>
+</defs>
+<path d="m0 0h620v472h-620z" fill="#fff" id="bg"/>
+<g id="g9" transform="translate(2 1)">
+<use fill="#fff" id="use11" xlink:href="#box1"/>
+<use fill="#ff0" id="use13" x="77" xlink:href="#box1"/>
+<use fill="#0ff" id="use15" x="154" xlink:href="#box1"/>
+<use fill="#0f0" id="use17" x="231" xlink:href="#box1"/>
+<use fill="#f0f" id="use19" x="308" xlink:href="#box1"/>
+<use fill="red" id="use21" x="385" xlink:href="#box1"/>
+<use fill="#00f" id="use23" x="462" xlink:href="#box1"/>
+<use id="use25" x="539" xlink:href="#box1"/>
+</g>
+<g id="g45" transform="translate(2 220)">
+<use fill="#0f0" id="use47" xlink:href="#box2"/>
+<use fill="#0f0" id="use49" x="77" xlink:href="#box2"/>
+<use fill="#0f0" id="use51" x="154" xlink:href="#box2"/>
+<use fill="#0f0" id="use53" x="231" xlink:href="#box2"/>
+<use fill="#fff" id="use55" x="308" xlink:href="#box2"/>
+<use fill="#fff" id="use57" x="385" xlink:href="#box2"/>
+<use fill="#fff" id="use59" x="462" xlink:href="#box2"/>
+<use fill="#fff" id="use61" x="539" xlink:href="#box2"/>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="green100" stroke-width="1" x="30" xml:space="preserve" y="35">0.59</text>
+</g>
+<g id="g27" transform="translate(2 280)">
+<use fill="red" id="use29" xlink:href="#box2"/>
+<use fill="red" id="use31" x="77" xlink:href="#box2"/>
+<use fill="#fff" id="use33" x="154" xlink:href="#box2"/>
+<use fill="#fff" id="use35" x="231" xlink:href="#box2"/>
+<use fill="red" id="use37" x="308" xlink:href="#box2"/>
+<use fill="red" id="use39" x="385" xlink:href="#box2"/>
+<use fill="#fff" id="use41" x="462" xlink:href="#box2"/>
+<use fill="#fff" id="use43" x="539" xlink:href="#box2"/>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="red100" stroke-width="1" x="20" xml:space="preserve" y="35">+0.30</text>
+</g>
+<g id="g63" transform="translate(2 340)">
+<use fill="#00f" id="use65" xlink:href="#box2"/>
+<use fill="#fff" id="use67" x="77" xlink:href="#box2"/>
+<use fill="#00f" id="use69" x="154" xlink:href="#box2"/>
+<use fill="#fff" id="use71" x="231" xlink:href="#box2"/>
+<use fill="#00f" id="use73" x="308" xlink:href="#box2"/>
+<use fill="#fff" id="use75" x="385" xlink:href="#box2"/>
+<use fill="#00f" id="use77" x="462" xlink:href="#box2"/>
+<use fill="#fff" id="use79" x="539" xlink:href="#box2"/>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="blue100" stroke-width="1" x="20" xml:space="preserve" y="35">+0.11</text>
+</g>
+<g id="g63" transform="translate(2 410)">
+<use fill="#fff" id="grey100" xlink:href="#box2"/>
+<use fill="#e3e3e3" id="grey89" x="77" xlink:href="#box2"/>
+<use fill="#b2b2b2" id="grey70" x="154" xlink:href="#box2"/>
+<use fill="#969696" id="grey59" x="231" xlink:href="#box2"/>
+<use fill="#696969" id="grey41" x="308" xlink:href="#box2"/>
+<use fill="#4d4d4d" id="grey30" x="385" xlink:href="#box2"/>
+<use fill="#1c1c1c" id="grey11" x="462" xlink:href="#box2"/>
+<use fill="#000" id="grey0" x="539" xlink:href="#box2"/>
+<text font-family="DejaVu Sans, Arial, Helvetica" id="txgrey100" stroke-width="1" x="20" xml:space="preserve" y="35">100%</text>
+<text font-family="DejaVu Sans, Arial, Helvetica" id="txgrey89" stroke-width="1" x="102" xml:space="preserve" y="35">89%</text>
+<text font-family="DejaVu Sans, Arial, Helvetica" id="txgrey70" stroke-width="1" x="179" xml:space="preserve" y="35">70%</text>
+<text font-family="DejaVu Sans, Arial, Helvetica" id="txgrey59" stroke-width="1" x="256" xml:space="preserve" y="35">59%</text>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="txgrey41" stroke-width="1" x="333" xml:space="preserve" y="35">41%</text>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="txgrey30" stroke-width="1" x="408" xml:space="preserve" y="35">30%</text>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="txgrey11" stroke-width="1" x="487" xml:space="preserve" y="35">11%</text>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" id="txgrey0" stroke-width="1" x="569" xml:space="preserve" y="35">0%</text>
+</g>
+<text fill="#fff" font-family="DejaVu Sans, Arial, Helvetica" font-size="180" id="text3446-0" stroke-width="4" x="90" xml:space="preserve" y="184">TEST</text>
+<text font-family="DejaVu Sans, Arial, Helvetica" id="text3446" stroke-width="4" x="80" xml:space="preserve" y="174"><tspan font-size="180" id="tspan3448" x="80" y="174">TEST</tspan></text>
+<style>@media (prefers-color-scheme: dark) {
+    svg {
+        filter: invert(100%)
+        }
+    }</style></svg>

@@ -1,0 +1,17 @@
+id: "svg-darkmode"
+name: "SVG darkmode"
+description: "Add dark mode (invert colours) to SVG using CSS"
+inputs:
+  inputs:
+    description: "SVG files to convert"
+    required: true
+    type: array
+    items: string
+outputs:
+  files:
+    description: The SVG files that have been converted
+    type: array
+    items: string
+runs:
+  using: "python"
+  main: "svg_darkmode/main.py"
