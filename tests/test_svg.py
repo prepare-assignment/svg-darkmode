@@ -24,12 +24,14 @@ def test_svg(file: str, monkeypatch: MonkeyPatch) -> None:
     monkeypatch.chdir(SVG_DIR)
     with open(file) as handle:
         contents = handle.read()
-    with tempfile.NamedTemporaryFile("w+") as handle:
-        handle.write(contents)
-        handle.flush()
-        add_style(handle.name)
-        handle.seek(0)
+    handle = tempfile.NamedTemporaryFile("w+", delete=False)
+    handle.write(contents)
+    handle.flush()
+    handle.close()
+    add_style(handle.name)
+    with open(handle.name, "r") as handle:
         result = handle.read()
+    os.unlink(handle.name)
     with open("result_" + file, mode="r") as handle:
         expected = handle.read()
     assert result == expected
