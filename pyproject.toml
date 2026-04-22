@@ -9,7 +9,7 @@ requires-python = ">=3.9"
 dependencies = [
     "prepare-toolbox>=0.4.0",
     "beautifulsoup4>=4.12.2",
-    "lxml>=5.3.0",
+    "lxml>=6.1.0",
     "cssutils>=2.9.0",
 ]
 
