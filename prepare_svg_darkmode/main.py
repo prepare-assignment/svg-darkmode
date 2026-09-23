@@ -7,7 +7,9 @@ from prepare_svg_darkmode.svg import add_style
 def main() -> None:
     try:
         inputs = get_input("inputs", required=True)
-        files = get_matching_files(inputs)
+        excluded = get_input("excluded")
+        include_hidden = get_input("include-hidden")
+        files = get_matching_files(inputs, excluded, include_hidden=bool(include_hidden))
         if len(files) == 0:
             # Nothing to convert is usually a mistake in the glob, but not a reason to fail the run
             warning(f"No files matched {inputs}")

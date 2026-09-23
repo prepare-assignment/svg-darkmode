@@ -22,7 +22,19 @@ inputs:
   required: true
   type: array
   items: string
+excluded:
+  description: "Glob(s) to exclude from matching the inputs"
+  required: false
+  type: array
+  items: string
+include-hidden:
+  description: "Also match hidden files and directories (starting with a '.') with wildcards such as '*' and '**', for both inputs and excluded"
+  required: false
+  type: boolean
+  default: false
 ```
+
+A glob that matches nothing is a warning, not an error. Files that are already converted are left as they are, so the task can run again.
 
 ## Outputs
 
@@ -32,8 +44,10 @@ The following outputs are available:
 files:
   description: The SVG files that have been converted
   type: array
-  items: strings
+  items: string
 ```
+
+- `files`: the converted files, relative to the working directory and always with `/` (also on Windows).
 
 ## Releases
 

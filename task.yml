@@ -7,6 +7,16 @@ inputs:
     required: true
     type: array
     items: string
+  excluded:
+    description: "Glob(s) to exclude from matching the inputs"
+    required: false
+    type: array
+    items: string
+  include-hidden:
+    description: "Also match hidden files and directories (starting with a '.') with wildcards such as '*' and '**', for both inputs and excluded"
+    required: false
+    type: boolean
+    default: false
 outputs:
   files:
     description: The SVG files that have been converted
