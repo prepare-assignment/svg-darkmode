@@ -40,6 +40,8 @@ def project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     (tmp_path / "images").mkdir()
     shutil.copy(SVGS / "test_empty.svg", tmp_path / "images" / "empty.svg")
     (tmp_path / "notes.txt").write_text("not an svg\n")
+    (tmp_path / ".hidden").mkdir()
+    shutil.copy(SVGS / "test_empty.svg", tmp_path / ".hidden" / "hidden.svg")
     monkeypatch.chdir(tmp_path)
     return tmp_path
 
@@ -131,3 +133,26 @@ def test_unicode(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerF
     contents = (project / "unicode.svg").read_text(encoding="utf-8")
     assert "Ω — café · 日本語" in contents
     assert MEDIA_QUERY in contents
+
+
+def test_excluded(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    set_inputs(monkeypatch, inputs=["**/*.svg"], excluded=["images/**"])
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    assert converted(set_output) == ["test.svg"]
+    assert MEDIA_QUERY not in (project / "images" / "empty.svg").read_text()
+
+
+def test_hidden_files_are_skipped(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    set_inputs(monkeypatch, inputs=["**/*.svg"])
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    assert converted(set_output) == ["images/empty.svg", "test.svg"]
+
+
+def test_include_hidden(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    set_inputs(monkeypatch, inputs=["**/*.svg"], include_hidden=True)
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    assert converted(set_output) == [".hidden/hidden.svg", "images/empty.svg", "test.svg"]
+    assert MEDIA_QUERY in (project / ".hidden" / "hidden.svg").read_text()
