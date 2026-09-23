@@ -13,7 +13,8 @@ FILTER_PROPERTY: Final[str] = "invert(100%);"
 
 
 def add_style(file: str) -> None:
-    with open(file, "r") as handle:
+    # SVG is XML: UTF-8, not the platform default (cp1252 on Windows)
+    with open(file, "r", encoding="utf-8") as handle:
         contents = handle.read()
     xml = BeautifulSoup(contents, "xml")
     # check if we have a svg tag
@@ -51,5 +52,5 @@ def add_style(file: str) -> None:
         svg_style.style["filter"] = FILTER_PROPERTY
         darkmode_style.add(svg_style)
     style_tag.string = stylesheet.cssText.decode("utf-8")
-    with open(file, 'w') as handle:
+    with open(file, 'w', encoding="utf-8") as handle:
         handle.write(str(xml))
