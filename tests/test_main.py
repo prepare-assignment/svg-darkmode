@@ -81,9 +81,14 @@ def test_twice_keeps_one_rule(project: Path, monkeypatch: pytest.MonkeyPatch, mo
 
 
 def test_no_matches(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    """A glob that matches nothing used to be silent: an empty output and no message"""
     set_inputs(monkeypatch, inputs=["**/*.svgz"])
     set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    warning = mocker.patch("prepare_svg_darkmode.main.warning")
+    failed = mocker.patch("prepare_svg_darkmode.main.set_failed")
     main()
+    warning.assert_called_once_with("No files matched ['**/*.svgz']")
+    failed.assert_not_called()
     assert converted(set_output) == []
 
 
