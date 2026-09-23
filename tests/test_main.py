@@ -1,16 +1,95 @@
+import json
+import shutil
+from pathlib import Path
+from typing import Any, Dict, List
+
+import pytest
+import yaml
 from pytest_mock import MockerFixture
 
 from prepare_svg_darkmode.main import main
 
+TASK = Path(__file__).parent.parent / "task.yml"
+SVGS = Path(__file__).parent / "svgs"
+MEDIA_QUERY = "@media (prefers-color-scheme: dark)"
 
-def test_main(mocker: MockerFixture) -> None:
 
-    mocker.patch('prepare_svg_darkmode.main.get_input')
-    mocker.patch("prepare_svg_darkmode.main.get_matching_files", return_value=["a.svg", "b.svg"])
-    mocked_add_style = mocker.patch("prepare_svg_darkmode.main.add_style")
-    mocked_set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+def set_inputs(monkeypatch: pytest.MonkeyPatch, **inputs: Any) -> None:
+    """
+    Pass the inputs like prepare-assignment core does: as JSON in PREPARE_<NAME> environment variables,
+    including the defaults from task.yml. Use the names from task.yml, with '_' for '-'.
+    """
+    definition: Dict[str, Any] = yaml.safe_load(TASK.read_text(encoding="utf-8"))["inputs"]
+    values = {name: spec["default"] for name, spec in definition.items() if "default" in spec}
+    values.update({key.replace("_", "-"): value for key, value in inputs.items()})
+    for key, value in values.items():
+        if value is not None:
+            monkeypatch.setenv(f"PREPARE_{key.upper()}", json.dumps(value))
 
+
+@pytest.fixture
+def project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """
+    project
+    |- test.svg
+    |- images
+    |  |- empty.svg
+    |- notes.txt
+    """
+    shutil.copy(SVGS / "test.svg", tmp_path / "test.svg")
+    (tmp_path / "images").mkdir()
+    shutil.copy(SVGS / "test_empty.svg", tmp_path / "images" / "empty.svg")
+    (tmp_path / "notes.txt").write_text("not an svg\n")
+    monkeypatch.chdir(tmp_path)
+    return tmp_path
+
+
+def converted(set_output: Any) -> List[str]:
+    """The files output, as is: paths use '/' on every platform (they are used in other steps)"""
+    set_output.assert_called_once()
+    return list(set_output.call_args.args[1])
+
+
+def test_convert(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    set_inputs(monkeypatch, inputs=["**/*.svg"])
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
     main()
+    assert converted(set_output) == ["images/empty.svg", "test.svg"]
+    for file in ["test.svg", "images/empty.svg"]:
+        contents = (project / file).read_text()
+        assert MEDIA_QUERY in contents
+        assert "filter: invert(100%)" in contents
 
-    assert mocked_add_style.call_count == 2
-    mocked_set_output.assert_called_once_with("files", ["a.svg", "b.svg"])
+
+def test_only_matched_files(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    set_inputs(monkeypatch, inputs=["images/*.svg"])
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    assert converted(set_output) == ["images/empty.svg"]
+    assert MEDIA_QUERY not in (project / "test.svg").read_text()
+
+
+def test_twice_keeps_one_rule(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    """Running the task again on a converted file doesn't add the style a second time"""
+    set_inputs(monkeypatch, inputs=["test.svg"])
+    mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    once = (project / "test.svg").read_text()
+    main()
+    assert (project / "test.svg").read_text() == once
+    assert once.count(MEDIA_QUERY) == 1
+
+
+def test_no_matches(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    set_inputs(monkeypatch, inputs=["**/*.svgz"])
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    assert converted(set_output) == []
+
+
+def test_not_an_svg(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    """A file without an <svg> tag: the error is not reported through set_failed yet"""
+    shutil.copy(SVGS / "invalid.svg", project / "invalid.svg")
+    set_inputs(monkeypatch, inputs=["invalid.svg"])
+    with pytest.raises(ValueError, match="Missing svg tag"):
+        main()
