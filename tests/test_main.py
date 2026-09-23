@@ -113,3 +113,16 @@ def test_unreadable_file(project: Path, monkeypatch: pytest.MonkeyPatch, mocker:
     failed = mocker.patch("prepare_svg_darkmode.main.set_failed")
     main()
     failed.assert_called_once()
+
+
+def test_unicode(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    """The files were read and written with the platform default encoding, cp1252 on Windows"""
+    shutil.copy(SVGS / "test_unicode.svg", project / "unicode.svg")
+    set_inputs(monkeypatch, inputs=["unicode.svg"])
+    failed = mocker.patch("prepare_svg_darkmode.main.set_failed")
+    mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    failed.assert_not_called()
+    contents = (project / "unicode.svg").read_text(encoding="utf-8")
+    assert "Ω — café · 日本語" in contents
+    assert MEDIA_QUERY in contents
