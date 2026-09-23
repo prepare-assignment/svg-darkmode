@@ -1,14 +1,14 @@
 from pytest_mock import MockerFixture
 
-from svg_darkmode.main import main
+from prepare_svg_darkmode.main import main
 
 
 def test_main(mocker: MockerFixture) -> None:
 
-    mocker.patch('svg_darkmode.main.get_input')
-    mocker.patch("svg_darkmode.main.get_matching_files", return_value=["a.svg", "b.svg"])
-    mocked_add_style = mocker.patch("svg_darkmode.main.add_style")
-    mocked_set_output = mocker.patch("svg_darkmode.main.set_output")
+    mocker.patch('prepare_svg_darkmode.main.get_input')
+    mocker.patch("prepare_svg_darkmode.main.get_matching_files", return_value=["a.svg", "b.svg"])
+    mocked_add_style = mocker.patch("prepare_svg_darkmode.main.add_style")
+    mocked_set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
 
     main()
 

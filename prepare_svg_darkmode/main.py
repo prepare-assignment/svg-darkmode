@@ -1,7 +1,7 @@
 from prepare_toolbox.core import get_input, set_output
 from prepare_toolbox.file import get_matching_files
 
-from svg_darkmode.svg import add_style
+from prepare_svg_darkmode.svg import add_style
 
 
 def main() -> None:

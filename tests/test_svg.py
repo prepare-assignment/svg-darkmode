@@ -6,7 +6,7 @@ from typing import Final
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 
-from svg_darkmode.svg import add_style
+from prepare_svg_darkmode.svg import add_style
 
 SVG_DIR: Final[str] = os.path.join(Path(__file__).parent.absolute(), "svgs")
 
