@@ -88,8 +88,28 @@ def test_no_matches(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: Mock
 
 
 def test_not_an_svg(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
-    """A file without an <svg> tag: the error is not reported through set_failed yet"""
+    """The error used to come out of main() as a traceback, so core never got the message"""
     shutil.copy(SVGS / "invalid.svg", project / "invalid.svg")
     set_inputs(monkeypatch, inputs=["invalid.svg"])
-    with pytest.raises(ValueError, match="Missing svg tag"):
-        main()
+    failed = mocker.patch("prepare_svg_darkmode.main.set_failed")
+    set_output = mocker.patch("prepare_svg_darkmode.main.set_output")
+    main()
+    assert "Missing svg tag" in str(failed.call_args.args[0])
+    set_output.assert_not_called()
+
+
+def test_missing_input(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    """A required input that core didn't pass is reported, not raised"""
+    monkeypatch.delenv("PREPARE_INPUTS", raising=False)
+    failed = mocker.patch("prepare_svg_darkmode.main.set_failed")
+    main()
+    failed.assert_called_once()
+
+
+def test_unreadable_file(project: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture) -> None:
+    """A directory that matches the glob: the OS error is reported like any other failure"""
+    (project / "broken.svg").mkdir()
+    set_inputs(monkeypatch, inputs=["broken.svg"])
+    failed = mocker.patch("prepare_svg_darkmode.main.set_failed")
+    main()
+    failed.assert_called_once()
