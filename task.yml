@@ -14,4 +14,4 @@ outputs:
     items: string
 runs:
   using: "python"
-  main: "svg_darkmode/main.py"
+  main: "prepare_svg_darkmode/main.py"

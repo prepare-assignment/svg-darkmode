@@ -1,5 +1,5 @@
 [project]
-name = "svg-darkmode"
+name = "prepare-svg-darkmode"
 version = "1.0.0"
 description = "Add css style to invert colours based on prefers-color-scheme"
 authors = [{ name = "Martijn Bonajo", email = "m.bonajo@fontys.nl" }]
