@@ -5,7 +5,7 @@ description = "Add css style to invert colours based on prefers-color-scheme"
 authors = [{ name = "Martijn Bonajo", email = "m.bonajo@fontys.nl" }]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11.5"
 dependencies = [
     "prepare-toolbox>=1.0.1",
     "beautifulsoup4>=4.12.2",
